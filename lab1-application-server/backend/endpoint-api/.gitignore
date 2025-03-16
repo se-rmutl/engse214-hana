@@ -1,0 +1,8 @@
+node_modules
+package-lock.json
+*.crt
+*.key
+apiconfig.js
+sqlConfig.js
+*.log
+.env
