@@ -5,3 +5,4 @@ package-lock.json
 apiconfig.js
 sqlConfig.js
 *.log
+.env
