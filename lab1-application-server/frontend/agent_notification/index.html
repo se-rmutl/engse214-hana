@@ -529,6 +529,40 @@
 
       function logoutFromAPI() {
         console.log("-- Agent Logout --");
+
+        //--------------
+                
+        var formData = new FormData();
+
+        console.log("agentData.agent_code (Logout): "+agentData.agent_code);
+
+        formData.append("AgentCode", agentData.agent_code);
+        formData.append("AgentName", agentData.AgentName);
+        formData.append("AgentStatus", "1"); //Hardcode to Avaliable for initial status
+        formData.append("Team", "0"); //Hardcode Team No.
+        formData.append("AgentStatusCode", "4"); //Hardcode to "4"
+        formData.append("IsLogin", "0");//Hardcode set "0" to Logout
+
+        //-- endpoint-api request for Logout
+        $.ajax({
+          type: "POST",
+          url: APIServer + "/postOnlineAgentStatus",
+          headers: {
+            Authorization: "Bearer " + serverKey,
+          },
+          data: formData,
+          success: function (result) {
+            console.log("postOnlineAgentStatus (Logout): " + result);
+          },
+          processData: false,
+          contentType: false,
+          //dataType: "json",
+          //contentType: 'multipart/form-data',
+        });
+
+        //-------------------
+
+
         timer.stop();
         timer.reset();
         $("#buttonCall").hide();
@@ -586,38 +620,6 @@
         console.log(" Agent Code  -> Set empty");
         localStorage.setItem("agent", "");
         console.log(localStorage.getItem("agent"));
-
-        //--------------
-        
-        var formData = new FormData();
-
-        console.log("agentData.agent_code (Logout): "+agentData.agent_code);
-
-        formData.append("AgentCode", agentData.agent_code);
-        formData.append("AgentName", agentData.AgentName);
-        formData.append("AgentStatus", "1"); //Hardcode to Avaliable for initial status
-        formData.append("Team", "0"); //Hardcode Team No.
-        formData.append("AgentStatusCode", "4"); //Hardcode to "4"
-        formData.append("IsLogin", "0");//Hardcode set "0" to Logout
-
-        //-- endpoint-api request for Logout
-        $.ajax({
-          type: "POST",
-          url: APIServer + "/postOnlineAgentStatus",
-          headers: {
-            Authorization: "Bearer " + serverKey,
-          },
-          data: formData,
-          success: function (result) {
-            console.log("postOnlineAgentStatus: " + result);
-          },
-          processData: false,
-          contentType: false,
-          //dataType: "json",
-          //contentType: 'multipart/form-data',
-        });
-
-
 
       }
 

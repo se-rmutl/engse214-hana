@@ -329,6 +329,7 @@ const init = async () => {
             })
             .code(400);
         else {
+
           const responsedata =
             await OnlineAgent.OnlineAgentRepo.postOnlineAgentStatus(
               AgentCode,
@@ -341,20 +342,6 @@ const init = async () => {
           console.log("AgentCode: " + AgentCode);
 
           if (!responsedata.error) {
-            if (clientWebSockets[AgentCode]) {
-              console.log("Sennding MessageType");
-
-              clientWebSockets[AgentCode].send(
-                JSON.stringify({
-                  MessageType: "1",
-                  AgentCode: AgentCode,
-                  AgentName: AgentName,
-                  IsLogin: IsLogin,
-                  AgentStatus: AgentStatus,
-                  DateTime: d.toLocaleString("en-US"),
-                })
-              );
-
               //--------- call parse server API -----
 
               const axios = require("axios");
@@ -370,8 +357,7 @@ const init = async () => {
                 // ca:fs.readFileSync("team0-engse214.net.crt")
               });
 
-              axios
-                .post(
+              axios.post(
                   parse_server_config.hosturl +
                     "/functions/postOnlineAgentListByTeam",
                   {
@@ -383,8 +369,7 @@ const init = async () => {
                     AgentStatusCode: AgentStatusCode,
                     IsLogin: IsLogin,
                   }
-                )
-                .then(
+                ).then(
                   (response) => {
                     console.log(response);
                     // return response.status
@@ -394,7 +379,25 @@ const init = async () => {
                   }
                 );
 
-              //---------
+              //--------- End call parse server API -----
+
+              
+            if (clientWebSockets[AgentCode]) {
+              console.log("Sennding MessageType");
+
+              clientWebSockets[AgentCode].send(
+                JSON.stringify({
+                  MessageType: "1",
+                  AgentCode: AgentCode,
+                  AgentName: AgentName,
+                  IsLogin: IsLogin,
+                  AgentStatus: AgentStatus,
+                  DateTime: d.toLocaleString("en-US"),
+                })
+              );
+
+
+
               return {
                 error: false,
                 message: "Agent status has been set.",
@@ -411,6 +414,7 @@ const init = async () => {
             return h
               .response("Something went wrong. Please try again later.")
               .code(500);
+
         }
       } catch (err) {
         console.dir(err);
