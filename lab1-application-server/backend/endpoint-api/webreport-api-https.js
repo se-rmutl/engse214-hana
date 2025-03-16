@@ -6,7 +6,7 @@ let cors = require("cors");
 
 const OnlineAgent = require("./repository/OnlineAgent");
 
-const apiconfig = require("./apiconfig")["production"];
+const apiconfig = require("./apiconfig")["deveopment"];
 
 const parse_server_config = apiconfig.parse_server;
 
