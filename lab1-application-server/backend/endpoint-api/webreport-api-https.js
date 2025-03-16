@@ -10,6 +10,9 @@ const apiconfig = require("./apiconfig")["production"];
 
 const parse_server_config = apiconfig.parse_server;
 
+const ssl_path = apiconfig.ssl_path;
+
+
 //-------------------------------------
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
@@ -117,8 +120,8 @@ const init = async () => {
   var fs = require("fs");
 
   var tls = {
-    key: fs.readFileSync("team0-engse214.net.key"),
-    cert: fs.readFileSync("team0-engse214.net.crt"),
+    key: fs.readFileSync(ssl_path+"team0-engse214.net.key"),
+    cert: fs.readFileSync(ssl_path+"team0-engse214.net.crt"),
   };
 
   //const server = Hapi.Server({
